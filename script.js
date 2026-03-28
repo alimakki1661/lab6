@@ -4,26 +4,25 @@ function loadFacts() {
     fetch("https://brianobruno.github.io/cats.json")
         .then(response => response.json())
         .then(data => {
-            console.log(data); // ALWAYS inspect first
 
-            // 1. Sort facts by factId
+            // sort by factId
             const sortedFacts = data.facts.sort((a, b) => a.factId - b.factId);
 
-            // 2. Populate table
+            // clear table before adding new rows
             const table = document.getElementById("factTable");
-            table.innerHTML = ""; // clear old data (important)
+            table.innerHTML = "";
 
+            // populate table
             sortedFacts.forEach(item => {
-                const row = `
+                table.innerHTML += `
                     <tr>
                         <td>${item.factId}</td>
-                        <td>${item.fact}</td>
+                        <td>${item.text}</td>
                     </tr>
                 `;
-                table.innerHTML += row;
             });
 
-            // 3. Update image
+            // update image
             document.getElementById("catImage").src = data.catPhoto;
         })
         .catch(error => {
